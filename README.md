@@ -69,6 +69,8 @@ You can tune which entity types get redacted by setting the mode on the `PromptR
 
 A live instance is running on [Railway](https://railway.app). You can use it directly without deploying anything yourself.
 
+Want to see the redaction engine in action without writing any code? Try it on the [Ikhaka privacy chat](https://ikhaka.com) — paste any text containing personal information and watch it get redacted in real time.
+
 ---
 
 ## Quick start
