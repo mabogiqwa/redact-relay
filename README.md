@@ -1,4 +1,4 @@
-# Ikhaka AI — Privacy Redaction API
+# Privacy Redaction API
 
 A self-hosted API that strips personal information out of prompts before they reach an LLM, then puts it back into the response so the output still reads naturally. No real names, ID numbers, or contact details ever leave your infrastructure.
 
