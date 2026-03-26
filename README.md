@@ -1,8 +1,6 @@
-# Privacy Redaction API
+# Ikhaka AI — Privacy Redaction API
 
 A self-hosted API that strips personal information out of prompts before they reach an LLM, then puts it back into the response so the output still reads naturally. No real names, ID numbers, or contact details ever leave your infrastructure.
-
-Built with South African law in mind — specifically POPIA Section 72, which treats sending personal information to an offshore LLM provider as a cross-border data transfer.
 
 ---
 
@@ -67,16 +65,36 @@ You can tune which entity types get redacted by setting the mode on the `PromptR
 
 ---
 
+## Hosted API
+
+A live instance is running on [Railway](https://railway.app). You can use it directly without deploying anything yourself.
+
+---
+
 ## Quick start
 
-Run locally with Docker:
+**Deploy to Railway**
+
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app)
+
+Set the following environment variables in your Railway project:
+
+| Variable | Value |
+|----------|-------|
+| `APP_ENV` | `production` |
+| `APP_MASTER_KEY` | a strong random secret |
+| `SPACY_MODEL` | `en_core_web_sm` (optional) |
+
+Railway injects `PORT` automatically — the Dockerfile is already configured to use it.
+
+**Run locally with Docker**
 
 ```bash
-docker build -t ikhaka-api .
-docker run -p 8080:8080 -e IKHAKA_MASTER_KEY=your-secret ikhaka-api
+docker build -t redact-api .
+docker run -p 8080:8080 -e APP_MASTER_KEY=your-secret redact-api
 ```
 
-Or with uvicorn directly:
+**Run locally with uvicorn**
 
 ```bash
 pip install -r requirements.txt
@@ -239,11 +257,3 @@ restored = redactor.restore(llm_response, result.session_id)
 ```
 
 For multi-turn conversations, pass a `RedactionSession` object across calls so placeholder numbering stays consistent across turns.
-
----
-
-## POPIA notes
-
-The key legal basis this addresses is POPIA Section 72: sending personal information to an offshore service constitutes a cross-border transfer and requires specific conditions to be met. By redacting before transmission, identifiable personal information never leaves your infrastructure — the LLM receives only anonymised text.
-
-The `/audit` endpoint provides a processing record confirming that original values are held in-memory only, for the duration of the session, and are never written to logs or disk.
