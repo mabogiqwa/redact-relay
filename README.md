@@ -1,6 +1,8 @@
-# Ikhaka AI — Privacy Redaction API
+# Privacy Redaction API
 
 A self-hosted API that strips personal information out of prompts before they reach an LLM, then puts it back into the response so the output still reads naturally. No real names, ID numbers, or contact details ever leave your infrastructure.
+
+Built with South African law in mind — specifically POPIA Section 72, which treats sending personal information to an offshore LLM provider as a cross-border data transfer.
 
 ---
 
@@ -259,3 +261,11 @@ restored = redactor.restore(llm_response, result.session_id)
 ```
 
 For multi-turn conversations, pass a `RedactionSession` object across calls so placeholder numbering stays consistent across turns.
+
+---
+
+## Example
+
+The screenshot below shows a real redaction in action. The raw prompt contains a full patient record — name, SA ID number, phone, email, address, medical aid details, and physician name. The redacted version sent to the LLM replaces every piece of personal information with typed placeholders. The second turn shows the conversation continuing with placeholders consistently maintained across messages.
+
+![Redaction engine](images/backend_cpy.png)
